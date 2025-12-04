@@ -17,10 +17,11 @@ class DemoApp:
         user,passwd='postgres','postgres'
         try:
             self.conn=pg.connect(host=host,port=port,dbname=db,user=user,password=passwd)
-            self.cur=self.conn.cursor()
         except Exception as e:
             messagebox.showwarning("Внимание", f"{e}")
+            raise ConnectionError('К серверу не удалось подключиться')
         
+        self.cur=self.conn.cursor()
         self.status_var = tk.StringVar()
         self.status_var.set("")
         self.status_bar = ttk.Label(root, textvariable=self.status_var, relief=tk.RIDGE, anchor=tk.W)  # Статус бар
